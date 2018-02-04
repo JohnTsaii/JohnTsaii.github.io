@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: jekyll-theme-hacker
 title: You're up and running!
 ---
 
