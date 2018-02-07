@@ -2,7 +2,7 @@
 layout: default
 title:  "differents between stack and heap"
 date:   2018-02-07 20:47:22 +0800
-categories: memory management
+categories: "memory management"
 ---
 
 # 堆栈区别
