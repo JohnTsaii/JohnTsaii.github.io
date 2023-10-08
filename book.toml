@@ -1,0 +1,6 @@
+[book]
+authors = ["John Tsai"]
+language = "en"
+multilingual = false
+src = "src"
+title = "johntsaii.github.io"

@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>johntsaii.github.io</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="2018-02-07-differences-between-stack-and-heap.html"><strong aria-hidden="true">1.</strong> stack-heap</a></li><li class="chapter-item expanded "><a href="2018-05-31-insert-dylib-to-iOS-Application.html"><strong aria-hidden="true">2.</strong> insert-dylib-to-iOS-Application</a></li><li class="chapter-item expanded "><a href="2018-02-11-ssl-inappropriate-fallback-error.html"><strong aria-hidden="true">3.</strong> ssl-inappropriate-fallback-error</a></li><li class="chapter-item expanded "><a href="2019-03-17-iOS-codesign.html"><strong aria-hidden="true">4.</strong> iOS-codesign</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">johntsaii.github.io</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <hr />
+<h2>layout: default
+title:  &quot;differents between stack and heap&quot;
+date:   2018-02-07 20:47:22 +0800
+categories: &quot;memory management&quot;</h2>
+<h1 id="堆栈区别"><a class="header" href="#堆栈区别">堆栈区别</a></h1>
+<p>相同点：都是抽象的概念，计算机具体表示为数据结构。运行时分配实际内存，都在RAM上。</p>
+<h1 id="不同点"><a class="header" href="#不同点">不同点</a></h1>
+<h2 id="堆"><a class="header" href="#堆">堆</a></h2>
+<ul>
+<li>需要自己手动管理内存申请和释放：通过这些方法申请的内存都在堆上<code>malloc, realloc, calloc,and free</code>.</li>
+<li>堆在应用（进程）启动的时候被分配。当应用（进程）退出的时候，堆内存被回收。</li>
+<li>堆的大小在应用（进程） 启动的时候被设置，但是可以动态增长。</li>
+<li>堆的存取速度会比栈慢，对是全局资源，通常必须是多线程安全，即每个分配和释放需要同步。</li>
+</ul>
+<h2 id="栈"><a class="header" href="#栈">栈</a></h2>
+<ul>
+<li>不需要自己手动管理内存释放.</li>
+<li>栈跟线程绑定在一起,每个线程一般都会有一个栈,随着线程的执行完毕栈内存被系统回收。</li>
+<li>栈的大小在线程创建的时候被设置。影响他大小的因素有很多，包括，程序语言，机器架构，多线程，系统剩余可用的架构。</li>
+<li>栈的存取速度回比堆较快，因为他的设计模式让他申请内存和释放内存更快（只需要栈指针增加或者减少）。还有一般栈的内存地址都是连续的，另外栈中的每个字节都会经常被重复使用，往往会被缓存在处理器的缓存中。</li>
+</ul>
+<h1 id="引用"><a class="header" href="#引用">引用</a></h1>
+<p><a href="https://stackoverflow.com/questions/79923/what-and-where-are-the-stack-and-heap">stack heap</a>
+<a href="http://www.geeksforgeeks.org/memory-layout-of-c-program/">memory layout of c program</a>
+<a href="http://en.wikipedia.org/wiki/Data_segment">data segmnet</a>
+<a href="http://en.wikipedia.org/wiki/Code_segment">code segment</a>
+<a href="http://en.wikipedia.org/wiki/.bss">bbs</a>
+<a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">stack</a>
+<a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">heap</a>
+<a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a>
+<a href="https://en.wikipedia.org/wiki/Memory_management">memory management</a></p>
+<div style="break-before: page; page-break-before: always;"></div><hr />
+<h2>layout: default
+title:  &quot;iOS App注入动态库&quot;
+date:   2018-05-31 14:11:00 +0800
+categories: &quot;iOS reverse dylib&quot;</h2>
+<h1 id="目的"><a class="header" href="#目的">目的</a></h1>
+<pre><code>同事让我向应用注入dylib，来尝试他对dylib注入的防护是否有效。我的第一想法就是不用通过大家用的比较多的手段来注入。因为很容易被针对，所以我想到了直接修改App的可执行文件来达到注入的目的，然后找到了一个[insert_dylib](https://github.com/Tyilo/insert_dylib)工具，这个工具可以通过修改mach-o文件，将你需要加载的dylib生成一条`load_command`插入到`mach-o`文件最后一条的`command_line`里。  
+</code></pre>
+<h1 id="实践过程"><a class="header" href="#实践过程">实践过程</a></h1>
+<pre><code>接下来我们要做的就很简单了，找到你需要注入的安装包,然后改成.zip文件，解压，进入到`Payload/你的App名字/`的目录，用命令行输入`./insert_dylib 要插入动态库在设备上的路径 要被插入的可执行文件名字 生成新的文件名` 。上面要注意2点，第一点，生成的新的可执行文件需要重签名。第二点，那个dylib需要放入包里面，然后单独对dylib签名，签名的证书要与重新签名app的证书要相同。不然会报签名不对启动不了的问题。  
+</code></pre>
+<h1 id="需要注意的地方"><a class="header" href="#需要注意的地方">需要注意的地方</a></h1>
+<pre><code>在这个过程中dylib的插入路径我一直不知道怎么写，试了很多都不行，放在系统目录下会报`not found dylib`的错误, 我想到了我们framework里也是dylib的文件，我查看了app可执行文件的load_command那部分，发现有一个路径的变量` @executable_path`，这个路径代表当前可执行文件的路径，因此我把dylib移到与app可执行文件同一目录，insert_dylib的时候 动态库路径就指向` @executable_path/你插入的动态库.dylib`重新打包即可运行了。
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><hr />
+<h2>layout: default
+title:  &quot;SSL inappropriate fallback error&quot;
+date:   2018-02-11 14:11:00 +0800
+categories: &quot;network ssl&quot;</h2>
+<h1 id="inappropriate-fallback"><a class="header" href="#inappropriate-fallback">inappropriate fallback</a></h1>
+<p>  在查看接口SSL握手的过程中发现了一个<code>inappropriate fallback</code>错误，这个错误的产生在于客户端发起一个<strong>Client Hello</strong>消息用的TLS版本小于实际客户端支持的最大ssl版本，而且服务端支持比这个<strong>Client Hello</strong>消息使用的TLS版本更高版本时候。服务端就会返回这个fatal。<br />
+  通常的TLS协商过程：客户端在<strong>Client Hello</strong>消息有个值来表示客户端支持的最大TLS的版本（跟<em>Record Layer</em>的版本无关，<em>Record Layer</em>表示当前使用的TLS版本），然后服务端返回一个<strong>Server Hello</strong>消息里面包含了服务端支持的TLS版本（这个版本小于或等于客户端支持的最大版本）。例如：客户端最大支持TLSv1.2版本而服务端支持的最大版本是TLSv1.0，那么客户端SSL握手使用的是TLSv1.2版本，而服务端用的是TLSv1.0版本。如果客户端最大支持TLSv1.0而服务端支持最高是TLSv1.2，那么客户端SSL握手使用的是TLSv1.0版本，而服务端使用的也是TLSv1.0版本。<br />
+  如果客户端使用的版本高于服务端支持的最大版本，在有些服务端上会出问题。因此为了是在这种情况下，服务端也能正常响应，某些客户端会<strong>fallback</strong>，即回退TLS版本，如果是TLSv1.2版本，他会回退到TLSV1.1，如果这个还不行会回退到TLSv1.0版本。<br />
+  上面的方法会被攻击者利用来攻击早期版本的TLS漏洞，攻击者会使<strong>Client Hello</strong>失败，强制客户端回退到有漏洞的版本（客户端也可以不执行<strong>fallback</strong>这个功能）。<code>TLS_FALLBACK_SCSV</code>密码套件就是为了解决这个问题才被使用的。当使用比客户端支持的最大版本还低的TLS的时候（因为之前使用过最大版本失败了），客户端会<strong>Client Hello</strong>消息里带上这个密码套件。如果服务端收到这个密码套件，他会进行比较，如果服务端支持的版本这个<strong>Client Hello</strong>消息使用的TLS版本高，那么客户端就没有原因使用这个<strong>fallback</strong>方法，然后就会返回一个<strong>inappropriate fallback</strong>错误。（返回这个错误不一定意味着被攻击，只是意味着使用客户端最高版本的握手的时候失败了，再发起这个请求之后服务端返回这个错误）</p>
+<h1 id="引用-1"><a class="header" href="#引用-1">引用</a></h1>
+<p><a href="https://mta.openssl.org/pipermail/openssl-users/2017-June/thread.html#5911">ssl inappropriate fallback error thread mail</a><br />
+<a href="https://tools.ietf.org/html/rfc5246#section-6.2">RFC TLSv1.2</a><br />
+<a href="https://wiki.openssl.org/index.php/SSL_MODE_SEND_FALLBACK_SCSV">SSL_MODE_SEND_FALLBACK_SCSV wiki</a></p>
+<div style="break-before: page; page-break-before: always;"></div><hr />
+<h2>layout: default
+title:  &quot;Apple Codesign&quot;
+date:   2019-03-16 20:47:22 +0800
+categories: &quot;iOS macOS codesign&quot;</h2>
+<h1 id="code-signing"><a class="header" href="#code-signing">Code Signing</a></h1>
+<pre><code>代码签名顾名思义就是对你的代码进行签名（不过这边是对你编译打包后的代码进行签名，还有你的包里所有的资源文件），他的目的是确保你的app没有被不信任的第三方所篡改。还有一个目的，让系统知道2个不同版本的app是相同的，而不需要重复申请比如定位，相册等权限。
+</code></pre>
+<h1 id="组成"><a class="header" href="#组成">组成</a></h1>
+<h2 id="seal"><a class="header" href="#seal">Seal</a></h2>
+<pre><code>App各个部分代码的hash值或者校验码的集合。包含了App内包含的所以可执行文件（App主体可执行文件，动态库或者framework）、Info.plist、code requirements等等。通过一种hash算法对各个部分生产hash值。
+app运行的时候内核会重新根据规则生产hash值进行验证。但是hash可以被改变因此下面的数字签名保证了这点的安全。
+</code></pre>
+<h2 id="digital-signature"><a class="header" href="#digital-signature">Digital Signature</a></h2>
+<h3 id="原理"><a class="header" href="#原理">原理</a></h3>
+<pre><code>简单的来说是非对称加密，私钥加密，公钥解密。对上面生成的hash值集合进行加解密。只有签名者才拥有私钥，所以想修改hash值重新加密是几乎不可能的。
+</code></pre>
+<h3 id="注意点"><a class="header" href="#注意点">注意点</a></h3>
+<pre><code>每个加密后的数据保存的地方有3个
+</code></pre>
+<ul>
+<li>如果是可执行文件，那么签名后的数据保存在可执行文件里。</li>
+<li>资源文件包括Info.plist 保存在App包的*_CodeSignature/CodeResources*里。</li>
+<li>framework及类似资源相同的道理，保存在framework下的 可执行文件和*_CodeSignature/CodeResources*里</li>
+</ul>
+<h2 id="code-requirements"><a class="header" href="#code-requirements">Code Requirements</a></h2>
+<p>代码要求其实就是一套让系统评估签名的规则。签名者可以指定这个规则，但是系统可以选择是否按照该规则执行。</p>
+<h2 id="entitlements"><a class="header" href="#entitlements">Entitlements</a></h2>
+<pre><code>Entitlements是一个plist文件，该文件指定了那些系统资源可以被你的应用调用。你可以在Xcode的`Capabilities`里选择应用需要用到的系统功能，然后Xcode会自动帮你生产`.entitlements`文件。
+</code></pre>
+<h2 id="provisioning-profiles"><a class="header" href="#provisioning-profiles">Provisioning Profiles</a></h2>
+<pre><code> Provisioning Profiles是一个cms(Cryptographic Message Syntax)格式的文件，他的作用就是绑定签名、Entitlements和sandbox三者的配置文件。里面的内容可以通过命令`$ security cms -D -i example.mobileprovision`读取。内容包含了签名证书信息、Entitlements内容，以及可调试、调试机器列表等内容。
+</code></pre>
+<h2 id="recodesign"><a class="header" href="#recodesign">recodesign</a></h2>
+<h1 id="参考资料"><a class="header" href="#参考资料">参考资料</a></h1>
+<p><a href="https://www.objc.io/issues/17-security/inside-code-signing/">Inside Code Signing</a>
+<a href="https://developer.apple.com/library/archive/technotes/tn2206/_index.html">macOS Code Signing In Depth</a>
+<a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40005929-CH1-SW1">Code Signing Guide</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

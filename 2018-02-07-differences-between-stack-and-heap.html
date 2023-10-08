@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - johntsaii.github.io</title>
-        <base href="/">
+        <title>stack-heap - johntsaii.github.io</title>
 
 
         <!-- Custom HTML head -->
@@ -89,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="2018-02-07-differences-between-stack-and-heap.html"><strong aria-hidden="true">1.</strong> stack-heap</a></li><li class="chapter-item expanded "><a href="2018-05-31-insert-dylib-to-iOS-Application.html"><strong aria-hidden="true">2.</strong> insert-dylib-to-iOS-Application</a></li><li class="chapter-item expanded "><a href="2018-02-11-ssl-inappropriate-fallback-error.html"><strong aria-hidden="true">3.</strong> ssl-inappropriate-fallback-error</a></li><li class="chapter-item expanded "><a href="2019-03-17-iOS-codesign.html"><strong aria-hidden="true">4.</strong> iOS-codesign</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="2018-02-07-differences-between-stack-and-heap.html" class="active"><strong aria-hidden="true">1.</strong> stack-heap</a></li><li class="chapter-item expanded "><a href="2018-05-31-insert-dylib-to-iOS-Application.html"><strong aria-hidden="true">2.</strong> insert-dylib-to-iOS-Application</a></li><li class="chapter-item expanded "><a href="2018-02-11-ssl-inappropriate-fallback-error.html"><strong aria-hidden="true">3.</strong> ssl-inappropriate-fallback-error</a></li><li class="chapter-item expanded "><a href="2019-03-17-iOS-codesign.html"><strong aria-hidden="true">4.</strong> iOS-codesign</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -172,14 +171,47 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <hr />
+<h2>layout: default
+title:  &quot;differents between stack and heap&quot;
+date:   2018-02-07 20:47:22 +0800
+categories: &quot;memory management&quot;</h2>
+<h1 id="堆栈区别"><a class="header" href="#堆栈区别">堆栈区别</a></h1>
+<p>相同点：都是抽象的概念，计算机具体表示为数据结构。运行时分配实际内存，都在RAM上。</p>
+<h1 id="不同点"><a class="header" href="#不同点">不同点</a></h1>
+<h2 id="堆"><a class="header" href="#堆">堆</a></h2>
+<ul>
+<li>需要自己手动管理内存申请和释放：通过这些方法申请的内存都在堆上<code>malloc, realloc, calloc,and free</code>.</li>
+<li>堆在应用（进程）启动的时候被分配。当应用（进程）退出的时候，堆内存被回收。</li>
+<li>堆的大小在应用（进程） 启动的时候被设置，但是可以动态增长。</li>
+<li>堆的存取速度会比栈慢，对是全局资源，通常必须是多线程安全，即每个分配和释放需要同步。</li>
+</ul>
+<h2 id="栈"><a class="header" href="#栈">栈</a></h2>
+<ul>
+<li>不需要自己手动管理内存释放.</li>
+<li>栈跟线程绑定在一起,每个线程一般都会有一个栈,随着线程的执行完毕栈内存被系统回收。</li>
+<li>栈的大小在线程创建的时候被设置。影响他大小的因素有很多，包括，程序语言，机器架构，多线程，系统剩余可用的架构。</li>
+<li>栈的存取速度回比堆较快，因为他的设计模式让他申请内存和释放内存更快（只需要栈指针增加或者减少）。还有一般栈的内存地址都是连续的，另外栈中的每个字节都会经常被重复使用，往往会被缓存在处理器的缓存中。</li>
+</ul>
+<h1 id="引用"><a class="header" href="#引用">引用</a></h1>
+<p><a href="https://stackoverflow.com/questions/79923/what-and-where-are-the-stack-and-heap">stack heap</a>
+<a href="http://www.geeksforgeeks.org/memory-layout-of-c-program/">memory layout of c program</a>
+<a href="http://en.wikipedia.org/wiki/Data_segment">data segmnet</a>
+<a href="http://en.wikipedia.org/wiki/Code_segment">code segment</a>
+<a href="http://en.wikipedia.org/wiki/.bss">bbs</a>
+<a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">stack</a>
+<a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">heap</a>
+<a href="https://en.wikipedia.org/wiki/Virtual_memory">virtual memory</a>
+<a href="https://en.wikipedia.org/wiki/Memory_management">memory management</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
+                            <a rel="next prefetch" href="2018-05-31-insert-dylib-to-iOS-Application.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -188,6 +220,9 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
+                    <a rel="next prefetch" href="2018-05-31-insert-dylib-to-iOS-Application.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

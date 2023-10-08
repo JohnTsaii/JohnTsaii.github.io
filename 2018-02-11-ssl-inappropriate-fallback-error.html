@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - johntsaii.github.io</title>
-        <base href="/">
+        <title>ssl-inappropriate-fallback-error - johntsaii.github.io</title>
 
 
         <!-- Custom HTML head -->
@@ -89,7 +88,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="2018-02-07-differences-between-stack-and-heap.html"><strong aria-hidden="true">1.</strong> stack-heap</a></li><li class="chapter-item expanded "><a href="2018-05-31-insert-dylib-to-iOS-Application.html"><strong aria-hidden="true">2.</strong> insert-dylib-to-iOS-Application</a></li><li class="chapter-item expanded "><a href="2018-02-11-ssl-inappropriate-fallback-error.html"><strong aria-hidden="true">3.</strong> ssl-inappropriate-fallback-error</a></li><li class="chapter-item expanded "><a href="2019-03-17-iOS-codesign.html"><strong aria-hidden="true">4.</strong> iOS-codesign</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="2018-02-07-differences-between-stack-and-heap.html"><strong aria-hidden="true">1.</strong> stack-heap</a></li><li class="chapter-item expanded "><a href="2018-05-31-insert-dylib-to-iOS-Application.html"><strong aria-hidden="true">2.</strong> insert-dylib-to-iOS-Application</a></li><li class="chapter-item expanded "><a href="2018-02-11-ssl-inappropriate-fallback-error.html" class="active"><strong aria-hidden="true">3.</strong> ssl-inappropriate-fallback-error</a></li><li class="chapter-item expanded "><a href="2019-03-17-iOS-codesign.html"><strong aria-hidden="true">4.</strong> iOS-codesign</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -172,14 +171,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <hr />
+<h2>layout: default
+title:  &quot;SSL inappropriate fallback error&quot;
+date:   2018-02-11 14:11:00 +0800
+categories: &quot;network ssl&quot;</h2>
+<h1 id="inappropriate-fallback"><a class="header" href="#inappropriate-fallback">inappropriate fallback</a></h1>
+<p>  在查看接口SSL握手的过程中发现了一个<code>inappropriate fallback</code>错误，这个错误的产生在于客户端发起一个<strong>Client Hello</strong>消息用的TLS版本小于实际客户端支持的最大ssl版本，而且服务端支持比这个<strong>Client Hello</strong>消息使用的TLS版本更高版本时候。服务端就会返回这个fatal。<br />
+  通常的TLS协商过程：客户端在<strong>Client Hello</strong>消息有个值来表示客户端支持的最大TLS的版本（跟<em>Record Layer</em>的版本无关，<em>Record Layer</em>表示当前使用的TLS版本），然后服务端返回一个<strong>Server Hello</strong>消息里面包含了服务端支持的TLS版本（这个版本小于或等于客户端支持的最大版本）。例如：客户端最大支持TLSv1.2版本而服务端支持的最大版本是TLSv1.0，那么客户端SSL握手使用的是TLSv1.2版本，而服务端用的是TLSv1.0版本。如果客户端最大支持TLSv1.0而服务端支持最高是TLSv1.2，那么客户端SSL握手使用的是TLSv1.0版本，而服务端使用的也是TLSv1.0版本。<br />
+  如果客户端使用的版本高于服务端支持的最大版本，在有些服务端上会出问题。因此为了是在这种情况下，服务端也能正常响应，某些客户端会<strong>fallback</strong>，即回退TLS版本，如果是TLSv1.2版本，他会回退到TLSV1.1，如果这个还不行会回退到TLSv1.0版本。<br />
+  上面的方法会被攻击者利用来攻击早期版本的TLS漏洞，攻击者会使<strong>Client Hello</strong>失败，强制客户端回退到有漏洞的版本（客户端也可以不执行<strong>fallback</strong>这个功能）。<code>TLS_FALLBACK_SCSV</code>密码套件就是为了解决这个问题才被使用的。当使用比客户端支持的最大版本还低的TLS的时候（因为之前使用过最大版本失败了），客户端会<strong>Client Hello</strong>消息里带上这个密码套件。如果服务端收到这个密码套件，他会进行比较，如果服务端支持的版本这个<strong>Client Hello</strong>消息使用的TLS版本高，那么客户端就没有原因使用这个<strong>fallback</strong>方法，然后就会返回一个<strong>inappropriate fallback</strong>错误。（返回这个错误不一定意味着被攻击，只是意味着使用客户端最高版本的握手的时候失败了，再发起这个请求之后服务端返回这个错误）</p>
+<h1 id="引用"><a class="header" href="#引用">引用</a></h1>
+<p><a href="https://mta.openssl.org/pipermail/openssl-users/2017-June/thread.html#5911">ssl inappropriate fallback error thread mail</a><br />
+<a href="https://tools.ietf.org/html/rfc5246#section-6.2">RFC TLSv1.2</a><br />
+<a href="https://wiki.openssl.org/index.php/SSL_MODE_SEND_FALLBACK_SCSV">SSL_MODE_SEND_FALLBACK_SCSV wiki</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="2018-05-31-insert-dylib-to-iOS-Application.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next prefetch" href="2019-03-17-iOS-codesign.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -187,7 +204,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="2018-05-31-insert-dylib-to-iOS-Application.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next prefetch" href="2019-03-17-iOS-codesign.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
